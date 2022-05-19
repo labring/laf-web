@@ -9,6 +9,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+// const port = 9527 // dev port
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -30,6 +32,7 @@ export default defineConfig({
         'vue/macros',
         'vue-router',
         '@vueuse/core',
+        'pinia',
       ],
       dts: true,
       resolvers: [ElementPlusResolver()],
@@ -49,5 +52,20 @@ export default defineConfig({
   // https://github.com/vitest-dev/vitest
   test: {
     environment: 'jsdom',
+  },
+
+  // server
+  server: {
+    // port,
+    proxy: {
+      '/sys-api': {
+        target: 'http://console.local-dev.host:8080/',
+        changeOrigin: true,
+      },
+      '/sys-extension-api': {
+        target: 'http://console.local-dev.host:8080/',
+        changeOrigin: true,
+      },
+    },
   },
 })

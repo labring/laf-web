@@ -3,6 +3,6 @@ import { getToken } from '~/utils/auth'
 
 export const cloud = new Cloud({
   baseUrl: '/sys-extension-api',
-  dbProxyUrl: '/proxy/console',
+  dbProxyUrl: '/proxy/system',
   getAccessToken: getToken,
 })

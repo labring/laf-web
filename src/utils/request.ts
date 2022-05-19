@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { MessageBox } from 'element-ui'
-import { showInfo } from './show'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+// import { showInfo } from './show'
+// import store from '@/store'
+// import { getToken } from '~/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -15,17 +14,17 @@ service.interceptors.request.use(
   (config) => {
     // do something before request is sent
 
-    if (store.getters.token) {
-      // let each request carry token
-      // please modify it according to the actual situation
-      const token = `Bearer ${getToken()}`
-      config.headers.Authorization = token
-    }
+    // if (store.getters.token) {
+    //   // let each request carry token
+    //   // please modify it according to the actual situation
+    //   const token = `Bearer ${getToken()}`
+    //   config.headers.Authorization = token
+    // }
     return config
   },
   (error) => {
     // do something with request error
-    console.log(error) // for debug
+    // console.log(error) // for debug
     return Promise.reject(error)
   },
 )
@@ -50,18 +49,18 @@ service.interceptors.response.use(
 
     if (status === 401) {
       // to re-login
-      MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        confirmButtonText: 'Re-Login',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }).then(() => {
-        store.dispatch('user/resetToken')
-          .then(() => { location.reload() })
-      })
+      // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+      //   confirmButtonText: 'Re-Login',
+      //   cancelButtonText: 'Cancel',
+      //   type: 'warning',
+      // }).then(() => {
+      //   store.dispatch('user/resetToken')
+      //     .then(() => { location.reload() })
+      // })
       return Promise.reject(error)
     }
     if (status === 403) {
-      showInfo('无此操作权限')
+      // showInfo('无此操作权限')
       return Promise.reject(error)
     }
 
