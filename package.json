@@ -10,11 +10,15 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^1.1.4",
     "@vueuse/core": "^8.4.2",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.2",
     "element-plus": "^2.2.0",
     "laf-client-sdk": "^0.8.0-alpha.9",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.14",
+    "vite-plugin-vue-layouts": "^0.6.0",
     "vue": "^3.2.33",
     "vue-router": "^4.0.15"
   },

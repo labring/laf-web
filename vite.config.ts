@@ -4,6 +4,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
+import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
@@ -23,7 +24,29 @@ export default defineConfig({
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
-    Pages(),
+    Pages({
+      dirs: [
+        { dir: path.resolve(__dirname, './src/pages'), baseRoute: '' },
+        { dir: path.resolve(__dirname, './src/pages/account'), baseRoute: '' },
+      ],
+      // extensions: ['.vue', '.js', '.ts'],
+      // extendRoute(route: any) {
+      //   if (route.name === 'about')
+      //     route.props = (route: any) => ({ query: route.query.q })
+
+      //   if (route.name === 'components') {
+      //     return {
+      //       ...route,
+      //       beforeEnter: (route: any) => {
+      //         // eslint-disable-next-line no-console
+      //         console.log(route)
+      //       },
+      //     }
+      //   }
+      // },
+    }),
+
+    Layouts(),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
@@ -32,7 +55,6 @@ export default defineConfig({
         'vue/macros',
         'vue-router',
         '@vueuse/core',
-        'pinia',
       ],
       dts: true,
       resolvers: [ElementPlusResolver()],

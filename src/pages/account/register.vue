@@ -4,7 +4,7 @@ import * as useraApi from '~/api/user'
 
 const router = useRouter()
 const goLogin = () => {
-  router.push('/account/login')
+  router.push('/login')
 }
 
 let loading = $ref(false)

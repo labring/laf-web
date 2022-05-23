@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import type { FormInstance } from 'element-plus'
-import * as useraApi from '~/api/user'
-import * as auth from '~/utils/auth'
+import { useUserStore } from '~/store/user'
 
+const router = useRouter()
+const goPage = (page: string) => {
+  router.push(page)
+}
+
+const userStore = useUserStore()
 const loading = $ref(false)
 const loginFormRef = $ref<FormInstance>()
 const loginForm = $ref({
@@ -27,22 +32,13 @@ const login = async (loginEl: FormInstance | undefined) => {
 
     const { username, password } = loginForm
 
-    const res = await useraApi.login({ username: username.trim(), password }) as any
+    const res = await userStore.login(username, password) as any
 
-    if (res.error) {
-      ElMessage({
-        message: res.error,
-        type: 'error',
-      })
-      return
-    }
-    auth.setToken(res.data.access_token, res.data.expire)
+    if (res.error)
+      loginForm.password = ''
+
+    goPage('/application')
   })
-}
-
-const router = useRouter()
-const goRegister = () => {
-  router.push('/account/register')
 }
 </script>
 
@@ -54,7 +50,7 @@ const goRegister = () => {
         <el-button
           type="primary"
           text
-          @click="goRegister"
+          @click="goPage('/register')"
         >
           去注册？
         </el-button>
@@ -72,7 +68,7 @@ const goRegister = () => {
         <el-input v-model="loginForm.username" placeholder="请输入账户名" />
       </el-form-item>
       <el-form-item label="密码" mt-6 prop="password">
-        <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" />
+        <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" @keyup.enter="login(loginFormRef)" />
       </el-form-item>
       <el-form-item mt-10>
         <el-button

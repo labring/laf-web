@@ -1,7 +1,7 @@
 import { cloud } from './cloud'
 import { getCurrentBaseURL } from '~/utils'
 import { getToken, getTokenExpire } from '~/utils/auth'
-import request from '~/utils/request'
+import request from '~/api/request'
 
 /**
  * 请求我的应用
@@ -58,7 +58,7 @@ export async function createApplication(data) {
  * @param param0
  * @returns
  */
-export async function updateApplication(appid, { name }) {
+export async function updateApplication({ appid, name }) {
   const res = await request({
     url: `/sys-api/apps/${appid}`,
     method: 'post',
@@ -83,19 +83,11 @@ export async function removeApplication(appid) {
 }
 
 /**
- * Get application templates
- * @returns template lists
- */
-export async function getApplicationTemplates() {
-  return await cloud.invokeFunction('get_templates', {})
-}
-
-/**
  * 启动应用服务
  * @param {*} appid
  * @returns
  */
-export async function startApplicationService(appid) {
+export async function startApplicationInstance(appid) {
   const res = await request({
     url: `/sys-api/apps/${appid}/instance/start`,
     method: 'post',
@@ -108,7 +100,7 @@ export async function startApplicationService(appid) {
  * @param {*} appid
  * @returns
  */
-export async function stopApplicationService(appid) {
+export async function stopApplicationInstance(appid) {
   const res = await request({
     url: `/sys-api/apps/${appid}/instance/stop`,
     method: 'post',
