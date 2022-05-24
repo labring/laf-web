@@ -75,9 +75,9 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
-    token,
-    tokenExpire,
-    userProfile,
+    token: $$(token),
+    tokenExpire: $$(tokenExpire),
+    userProfile: $$(userProfile),
     login,
     getUserProfile,
     signup,
