@@ -10,34 +10,28 @@ const props = defineProps<{
   specs: any[]
 }>()
 
-const emit = defineEmits<{
-  closeCreateDialog: () => void
-  getApplications: () => void
-}>()
+const emit = defineEmits(['closeCreateDialog', 'getApplications'])
 
-const initCreateForm = () => ({
+const { isVisible } = toRefs(props)
+
+const appForm = reactive<{
+  _id?: string
+  appid?: string
+  name: string
+  spec: string
+}>({
   _id: '',
   appid: '',
   name: '',
   spec: '',
 })
 
-let appForm = $ref<{
-  _id?: string
-  appid?: string
-  name: string
-  spec: string
-}>(initCreateForm())
-
-watchEffect(() => {
-  const { _id, name, spec, appid } = props.app
-  appForm = {
-    _id,
-    appid,
-    name,
-    spec,
-  }
-})
+const initCreateForm = () => {
+  appForm._id = ''
+  appForm.appid = ''
+  appForm.name = ''
+  appForm.spec = ''
+}
 
 const formRef = $ref<FormInstance>()
 const formRules = {
@@ -49,8 +43,16 @@ const formRules = {
   ],
 }
 
+watchEffect(() => {
+  const { _id, name, spec, appid } = props.app
+  appForm._id = _id
+  appForm.appid = appid
+  appForm.name = name
+  appForm.spec = spec
+})
+
 let createFormLoading = $ref(false)
-const handleSubmit = async (formEl: FormInstance | undefined) => {
+const handleSubmit = (formEl: FormInstance | undefined) => {
   if (!formEl)
     return
 
@@ -72,10 +74,9 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
       return
     }
 
-    createFormLoading = false
     emit('closeCreateDialog')
     ElMessage.success('操作成功！')
-    appForm = initCreateForm()
+    initCreateForm()
     emit('getApplications')
   })
 }
@@ -85,6 +86,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
   <el-dialog
     v-model="isVisible"
     :title="type === 'update' ? '编辑应用' : '创建应用'"
+    @close="$emit('closeCreateDialog')"
   >
     <el-form
       ref="formRef"

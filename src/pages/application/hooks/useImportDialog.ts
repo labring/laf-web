@@ -7,8 +7,8 @@ export const useImportDialog = () => {
   }
 
   return {
-    importDialogVisible: ref(importDialogVisible),
-    currentImportApp: ref(currentApp),
+    importDialogVisible,
+    currentImportApp: currentApp,
     showImportDialog,
   }
 }

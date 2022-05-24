@@ -7,22 +7,18 @@ import { exportRawBlob } from '~/utils/file'
 const props = defineProps<{
   type: string
   apps: any[]
+  loading: boolean
 }>()
 
-const emit = defineEmits<{
-  showUpdateDialog: (app: any) => void
-  showImportDialog: (app: any) => void
-  getApplications: () => void
-}>()
+const emit = defineEmits(['showUpdateDialog', 'showImportDialog', 'getApplications'])
 
-let loading = $ref(false)
-
+const { loading } = toRefs(props)
 const serviceLoading = $ref<any>(new Map())
 
-const { copy } = useClipboard()
 const handleCopy = (text: string) => {
+  const { copy } = useClipboard()
   copy(text)
-  ElMessage.success('已复制！')
+  ElMessage.success('APP ID 已复制！')
 }
 
 const getRuntimeVersion = (app) => {
@@ -37,7 +33,7 @@ const startApp = async (app: any) => {
   const { appid } = app
   serviceLoading.set(appid, true)
   const res = await appAPI.startApplicationInstance(appid)
-  serviceLoading.set(appid, false)
+  serviceLoading.delete(appid)
 
   if (res.data)
     emit('getApplications')
@@ -75,9 +71,9 @@ const deleteApp = async (app) => {
 
 const exportApp = async (app) => {
   const { appid } = app
-  loading = true
+  loading.value = true
   const data = await appAPI.exportApplication(appid)
-  loading = false
+  loading.value = false
 
   const time = dayjs().format('YYYYMMDDHHmmss')
   const filename = `${app.name}_${time}.lapp`
@@ -98,8 +94,8 @@ const toDetail = (app) => {
       {{ type === 'created' ? '我创建的应用' : '我加入的应用' }}
     </template>
     <el-table
+      v-loading="loading"
       :data="apps"
-      :loading="loading"
       :empty-text="type === 'created' ? '暂无创建的应用' : '暂无加入的应用'"
       style="width: 100%"
     >
@@ -113,7 +109,7 @@ const toDetail = (app) => {
       </el-table-column>
       <el-table-column align="center" label="应用名" min-width="120">
         <template #default="{ row }">
-          <span class="link-type table-column-text" @click="$emit('showUpdateDialog', row)">{{ row.name }}</span>
+          <span truncate color-blue-400 style="cursor:pointer;" @click="$emit('showUpdateDialog', row)">{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="应用规格" min-width="80">
@@ -178,7 +174,7 @@ const toDetail = (app) => {
               开发
             </el-button>
           </el-tooltip>
-          <el-button type="default" size="small" @click="exportApp(row)">
+          <el-button type="default" size="small" :loading="loading" @click="exportApp(row)">
             导出
           </el-button>
           <el-button type="default" size="small" @click="$emit('showImportDialog', row)">

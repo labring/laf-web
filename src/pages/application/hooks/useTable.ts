@@ -7,9 +7,12 @@ export const useTable = () => {
   const specs = ref([])
   const loading = ref(false)
 
-  const getApplications = async () => {
-    loading.value = true
+  const getApplications = async (interval = false) => {
+    if (!interval)
+      loading.value = true
+
     const res = await appAPI.getMyApplications()
+
     loading.value = false
     if (res.error)
       return
@@ -33,10 +36,10 @@ export const useTable = () => {
   }
 
   return {
-    createdApps: ref(createdApps),
-    joinedApps: ref(joinedApps),
-    specs: ref(specs),
-    loading: ref(loading),
+    createdApps,
+    joinedApps,
+    specs,
+    loading,
     getApplications,
     getSpecs,
   }
