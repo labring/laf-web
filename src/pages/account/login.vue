@@ -84,3 +84,9 @@ const login = async (loginEl: FormInstance | undefined) => {
     </el-form>
   </el-card>
 </template>
+
+<route lang="yaml">
+name: login
+meta:
+  title: 登录
+</route>

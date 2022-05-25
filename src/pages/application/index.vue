@@ -82,3 +82,11 @@ onMounted(() => {
     />
   </div>
 </template>
+
+<route lang="yaml">
+name: applications
+meta:
+  layout: TopBarLayout
+  requiresAuth: true
+  title: 应用管理
+</route>
