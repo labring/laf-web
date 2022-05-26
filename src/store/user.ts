@@ -5,7 +5,7 @@ import * as userAPI from '~/api/user'
 export const useUserStore = defineStore('user', () => {
   let token = $ref(getToken())
   let tokenExpire = $ref(0)
-  let userProfile = $ref({})
+  let userProfile = $ref<any>({})
 
   const login = async (username: string, password: string) => {
     const res = await userAPI.login({ username, password }) as any

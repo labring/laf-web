@@ -11,8 +11,8 @@ const logOut = async () => {
 
 <template>
   <el-dropdown>
-    <span class="el-dropdown-link">
-      用户
+    <span class="el-dropdown-link flex items-center">
+      {{ userStore.userProfile.username }}
       <el-icon class="el-icon--right">
         <arrow-down />
       </el-icon>
