@@ -8,7 +8,7 @@ const goPage = (page: string) => {
 }
 
 const userStore = useUserStore()
-const loading = $ref(false)
+let loading = $ref(false)
 const loginFormRef = $ref<FormInstance>()
 const loginForm = $ref({
   username: '',
@@ -30,10 +30,12 @@ const login = async (loginEl: FormInstance | undefined) => {
     if (!valid)
       return
 
+    loading = true
     const { username, password } = loginForm
 
     const res = await userStore.login(username, password) as any
 
+    loading = false
     if (res.error)
       loginForm.password = ''
 
@@ -84,3 +86,9 @@ const login = async (loginEl: FormInstance | undefined) => {
     </el-form>
   </el-card>
 </template>
+
+<route lang="yaml">
+name: login
+meta:
+  title: 登录
+</route>

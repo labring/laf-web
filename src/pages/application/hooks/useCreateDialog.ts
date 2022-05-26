@@ -14,9 +14,9 @@ export const useCreateDialog = () => {
   }
 
   return {
-    currentCreateApp: ref(currentApp),
-    createDialogVisible: ref(createDialogVisible),
-    createFormType: ref(createFormType),
+    currentCreateApp: currentApp,
+    createDialogVisible,
+    createFormType,
     showCreateDialog,
     showUpdateDialog,
   }

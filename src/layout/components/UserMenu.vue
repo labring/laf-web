@@ -1,5 +1,12 @@
 <script lang="ts" setup>
+import { useUserStore } from '~/store'
+const userStore = useUserStore()
+const router = useRouter()
 
+const logOut = async () => {
+  await userStore.logOut()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -12,7 +19,7 @@
     </span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>
+        <el-dropdown-item @click="logOut">
           退出
         </el-dropdown-item>
       </el-dropdown-menu>

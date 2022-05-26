@@ -1,1 +1,1 @@
-export * as useUserStore from './user'
+export * from './user'

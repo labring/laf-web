@@ -122,3 +122,9 @@ const register = async (registerEl: FormInstance | undefined) => {
     </el-form>
   </el-card>
 </template>
+
+<route lang="yaml">
+name: register
+meta:
+  title: 注册
+</route>

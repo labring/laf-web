@@ -29,6 +29,7 @@ export default defineConfig({
         { dir: path.resolve(__dirname, './src/pages'), baseRoute: '' },
         { dir: path.resolve(__dirname, './src/pages/account'), baseRoute: '' },
       ],
+      exclude: ['**/components/**.vue'],
       // extensions: ['.vue', '.js', '.ts'],
       // extendRoute(route: any) {
       //   if (route.name === 'about')
@@ -46,7 +47,10 @@ export default defineConfig({
       // },
     }),
 
-    Layouts(),
+    Layouts({
+      layoutsDirs: path.resolve(__dirname, './src/layout'),
+      defaultLayout: 'default',
+    }),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({

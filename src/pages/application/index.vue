@@ -32,13 +32,15 @@ const {
 onMounted(() => {
   getApplications()
   getSpecs()
+
+  // setInterval(() => { getApplications(true) }, 5000)
 })
 </script>
 
 <template>
-  <div p-4>
+  <div p-4 :loading="loading">
     <div mb-2>
-      <el-button type="default" plain @click="getApplications">
+      <el-button type="default" plain @click="getApplications()">
         刷新
       </el-button>
       <el-button type="primary" plain @click="showCreateDialog">
@@ -66,17 +68,25 @@ onMounted(() => {
 
     <CreateDialog
       :type="createFormType"
+      :specs="specs"
       :is-visible="createDialogVisible"
       :app="currentCreateApp"
-      :specs="specs"
       @close-create-dialog="createDialogVisible = false"
       @get-applications="getApplications"
     />
 
     <ImportDialog
+      :is-visible="importDialogVisible"
       :app="currentImportApp"
-      :import-dialog-visible="importDialogVisible"
       @close-import-dialog="importDialogVisible = false"
     />
   </div>
 </template>
+
+<route lang="yaml">
+name: applications
+meta:
+  layout: TopBarLayout
+  requiresAuth: true
+  title: 应用管理
+</route>

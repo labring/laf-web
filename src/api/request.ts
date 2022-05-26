@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { ElMessageBox } from 'element-plus'
 import { useUserStore } from '~/store/user'
 
 // create an axios instance
