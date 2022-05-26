@@ -46,3 +46,14 @@ export function edit(data) {
     data,
   })
 }
+
+/**
+ * 编辑帐户信息
+ */
+export function resetPassword(data) {
+  return request({
+    url: '/sys-api/account/resetPassword',
+    method: 'post',
+    data,
+  })
+}
