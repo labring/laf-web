@@ -44,7 +44,7 @@ defineExpose({ open, close })
 </script>
 
 <template>
-  <el-dialog ref="dialogEl" v-model="dialogVisible" append-to-body :close-on-click-modal="false" :close-on-press-escape="false" title="重置密码">
+  <el-dialog ref="dialogEl" v-model="dialogVisible" destroy-on-close append-to-body :close-on-click-modal="false" :close-on-press-escape="false" title="重置密码">
     <el-form ref="formEl" :model="formData">
       <el-form-item label="新的密码" prop="password" :rules="[passwordField('新密码'), requiredField('新密码')]">
         <el-input
@@ -64,11 +64,11 @@ defineExpose({ open, close })
           auto-complete="off"
         />
       </el-form-item>
-      <el-form-item>
-        <el-button @click="submitForm">
-          提交
-        </el-button>
-      </el-form-item>
     </el-form>
+    <template #footer>
+      <el-button type="primary" @click="submitForm">
+        提交
+      </el-button>
+    </template>
   </el-dialog>
 </template>

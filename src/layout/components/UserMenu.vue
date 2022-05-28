@@ -12,7 +12,7 @@ const logOut = async () => {
 
 <template>
   <el-dropdown>
-    <span class="el-dropdown-link flex items-center">
+    <span class="el-dropdown-link flex items-center cursor-pointer">
       {{ userStore.userProfile.username }}
       <el-icon class="el-icon--right">
         <arrow-down />
