@@ -12,7 +12,7 @@ const logOut = async () => {
 
 <template>
   <el-dropdown>
-    <span class="el-dropdown-link flex items-center">
+    <span class="el-dropdown-link flex items-center cursor-pointer">
       {{ userStore.userProfile.username }}
       <el-icon class="el-icon--right">
         <arrow-down />
@@ -22,12 +22,12 @@ const logOut = async () => {
       <el-dropdown-menu>
         <common-opener v-slot="{ setRef, open }">
           <el-dropdown-item @click="open">
-            修改密码
+            {{ $t('layout.topbar.user.reset-password') }}
           </el-dropdown-item>
           <reset-password :ref="setRef" />
         </common-opener>
         <el-dropdown-item @click="logOut">
-          退出
+          {{ $t('layout.topbar.user.logout') }}
         </el-dropdown-item>
       </el-dropdown-menu>
     </template>

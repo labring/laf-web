@@ -9,6 +9,7 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import vueI18n from '@intlify/vite-plugin-vue-i18n'
 
 // const port = 9527 // dev port
 
@@ -21,6 +22,16 @@ export default defineConfig({
   plugins: [
     Vue({
       reactivityTransform: true,
+    }),
+    vueI18n({
+      // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
+      // compositionOnly: false,
+
+      // you need to set i18n resource including paths !
+      include: path.resolve(__dirname, './locales/**'),
+      compositionOnly: false,
+
+      defaultSFCLang: 'yml',
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
@@ -59,6 +70,7 @@ export default defineConfig({
         'vue/macros',
         'vue-router',
         '@vueuse/core',
+        'vue-i18n',
       ],
       dts: true,
       resolvers: [ElementPlusResolver()],
@@ -85,11 +97,11 @@ export default defineConfig({
     // port,
     proxy: {
       '/sys-api': {
-        target: 'http://console.local-dev.host:8080/',
+        target: 'http://console.local-dev.host:8000/',
         changeOrigin: true,
       },
       '/sys-extension-api': {
-        target: 'http://console.local-dev.host:8080/',
+        target: 'http://console.local-dev.host:8000/',
         changeOrigin: true,
       },
     },
