@@ -48,22 +48,14 @@ const login = async (loginEl: FormInstance | undefined) => {
   <el-card w-sm mt-20 ma>
     <template #header>
       <div flex justify-between items-center>
-        <span text-4>LAF 云开发账户登录</span>
-        <el-button
-          type="primary"
-          text
-          @click="goPage('/register')"
-        >
-          去注册？
+        <span text-4>{{ $t('pages.account.login.title') }}</span>
+        <el-button type="primary" text @click="goPage('/register')">
+          {{ $t('pages.account.register') }}
         </el-button>
       </div>
     </template>
     <el-form
-      ref="loginFormRef"
-      :model="loginForm"
-      label-width="100px"
-      label-position="top"
-      :rules="loginRules"
+      ref="loginFormRef" :model="loginForm" label-width="100px" label-position="top" :rules="loginRules"
       autocomplete="off"
     >
       <el-form-item label="账户" prop="username">
@@ -73,13 +65,7 @@ const login = async (loginEl: FormInstance | undefined) => {
         <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" @keyup.enter="login(loginFormRef)" />
       </el-form-item>
       <el-form-item mt-10>
-        <el-button
-          type="success"
-          plain
-          w-screen
-          :loading="loading"
-          @click="login(loginFormRef)"
-        >
+        <el-button type="success" plain w-screen :loading="loading" @click="login(loginFormRef)">
           登录
         </el-button>
       </el-form-item>
